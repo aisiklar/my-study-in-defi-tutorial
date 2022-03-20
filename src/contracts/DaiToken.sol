@@ -18,8 +18,8 @@ contract DaiToken {
         uint256 _value
     );
 
-    mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
+    mapping(address => uint256) public balanceOf;
 
     constructor() public {
         balanceOf[msg.sender] = totalSupply;
