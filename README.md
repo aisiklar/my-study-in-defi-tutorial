@@ -4,7 +4,7 @@ this repo is created to incrementally build my defi-tutorial which is a copy of 
 Kudos to him!!!
 
 ## Why this repo
-I am aiming to copy the code but also add some modifications or new features in the future... I also would like to track my work-effort on here with my commits/pushs to this repo...
+I am aiming to copy the code but also add some modifications or new features in the future... I also would like to track my work-effort in here with my commits/pushs to this repo...
 
 ## what new features:
 nothing yet to show here... In the future I hope.

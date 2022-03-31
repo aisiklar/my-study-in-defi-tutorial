@@ -44,13 +44,12 @@ contract TokenFarm {
     }
 
     // 2. issueing tokens (earn interest)
-
     // investors, who stake daiToken to the tokenFarm, earn dapp token
-
     function issueToken() public returns (bool) {
         // only the owner of the contract can call this function
         require(msg.sender == owner, "only the owner of the contract can call this function");
 
+        // issue tokens to all stakers (i.e. list)
         for (uint i = 0; i < stakers.length; i++) {
             address receipent = stakers[i];
             uint balance = stakingBalance[receipent];
