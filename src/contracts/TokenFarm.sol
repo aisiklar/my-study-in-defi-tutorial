@@ -45,7 +45,7 @@ contract TokenFarm {
 
     // 2. issueing tokens (earn interest)
     // investors, who stake daiToken to the tokenFarm, earn dapp token
-    function issueToken() public returns (bool) {
+    function issueTokens() public returns (bool) {
         // only the owner of the contract can call this function
         require(msg.sender == owner, "only the owner of the contract can call this function");
 
@@ -65,5 +65,15 @@ contract TokenFarm {
 
 
     // 3. unstaking tokens (withdraw)
+    function unstakeTokens() public {
+        // fetch the balance
+        uint balance = stakingBalance[msg.sender];
+        require (balance > 0, "balance cannot be zero!");
+        daiToken.transfer(msg.sender, balance);
+        //reset the stakingbalance:
+        stakingBalance[msg.sender] = 0;
+        // reset isStaking status
+        isStaking[msg.sender] = false;
+    }
 
 }

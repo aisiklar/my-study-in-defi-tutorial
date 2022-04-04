@@ -112,7 +112,7 @@ contract("TokenFarm", ([owner, investor]) => {
       
       //test for issuing tokens
       // call issueToken func. as if from owner, to issue tokens
-      await tokenFarm.issueToken( {from: owner} );
+      await tokenFarm.issueTokens( {from: owner} );
       // ckeck whether balance of the investor after issuance
       result = await dappToken.balanceOf(investor); 
       assert.equal(
@@ -122,11 +122,24 @@ contract("TokenFarm", ([owner, investor]) => {
         );
 
         //ensure that only owner can call the issueToken function
-        await tokenFarm.issueToken( {from: investor} ).should.be.rejected;
+        await tokenFarm.issueTokens( {from: investor} ).should.be.rejected;
       
-      
-      
+      // test for unstaking tokens:
+      // unstake tokens
+      await tokenFarm.unstakeTokens( { from: investor});
 
+      // check the new balances after unstaking, for investor, in dai
+      result = await daiToken.balanceOf(investor);
+      assert.equal(result.toString(), tokens("100"), "the mock DAI balance of investor should be 100 after unstaking");
+      // daiToken balance of tokenFarm
+      result = await daiToken.balanceOf(tokenFarm.address);
+      assert.equal(result.toString(), tokens("0"), "the daiToken balance of tokenFarm should be 0 after unstaking");
+      // check the new balances after unstaking, for investor, in TokenFarm wallet
+      result = await tokenFarm.stakingBalance(investor);
+      assert.equal(result.toString(), tokens("0"), "the tokenFarm balance of investor should be 0 after unstaking");
+      // check the isStaking status is false
+      result = await tokenFarm.isStaking(investor);
+      assert.equal(result.toString(), 'false', "isStaking should be zero" );
     });
   });
 
